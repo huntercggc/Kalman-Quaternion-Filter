@@ -12,7 +12,7 @@ for j = 1:length(ScopeData.signals.values(:,1))
     clf;
 end
 close(writerObj);
-movie(F,1,60)
+movie(F,20,20)
 
 
 

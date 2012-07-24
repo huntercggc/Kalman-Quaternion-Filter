@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.46"
+    ComputedModelVersion    "1.73"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -37,9 +37,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Korken"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Jul 24 13:20:22 2012"
+  LastModifiedDate	  "Tue Jul 24 19:32:03 2012"
   RTWModifiedTimeStamp	  265022674
-  ModelVersionFormat	  "1.%<AutoIncrement:46>"
+  ModelVersionFormat	  "1.%<AutoIncrement:73>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -721,6 +721,14 @@ Model {
       ContinuousStateAttributes	"''"
     }
     Block {
+      BlockType		      Mux
+      Inputs		      "4"
+      DisplayOption	      "none"
+      UseBusObject	      off
+      BusObject		      "BusObject"
+      NonVirtualBus	      off
+    }
+    Block {
       BlockType		      Outport
       Port		      "1"
       OutMin		      "[]"
@@ -784,12 +792,32 @@ Model {
       GeneratePreprocessorConditionals off
     }
     Block {
+      BlockType		      Sum
+      IconShape		      "rectangular"
+      Inputs		      "++"
+      CollapseMode	      "All dimensions"
+      CollapseDim	      "1"
+      InputSameDT	      on
+      AccumDataTypeStr	      "Inherit: Inherit via internal rule"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: Same as first input"
+      LockScale		      off
+      RndMeth		      "Floor"
+      SaturateOnIntegerOverflow	on
+      SampleTime	      "-1"
+    }
+    Block {
       BlockType		      Terminator
+    }
+    Block {
+      BlockType		      ZeroOrderHold
+      SampleTime	      "1"
     }
   }
   System {
     Name		    "ahrs_filter"
-    Location		    [667, 171, 1430, 662]
+    Location		    [667, 171, 1692, 704]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    212
@@ -803,7 +831,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "12"
+    SIDHighWatermark	    "24"
     Block {
       BlockType		      Integrator
       Name		      "Integrator"
@@ -811,6 +839,12 @@ Model {
       Ports		      [1, 1]
       Position		      [335, 185, 365, 215]
       InitialCondition	      "[1; 0; 0; 0]"
+      Port {
+	PortNumber		1
+	Name			"Quaternion"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
     }
     Block {
       BlockType		      SubSystem
@@ -971,39 +1005,343 @@ Model {
       }
     }
     Block {
-      BlockType		      DiscretePulseGenerator
-      Name		      "Pulse\nGenerator"
-      SID		      "10"
-      Ports		      [0, 1]
-      Position		      [25, 239, 55, 271]
-      PulseType		      "Time based"
-      Amplitude		      "0.03"
-      Period		      "30"
-      PulseWidth	      "33"
-      PhaseDelay	      "20"
+      BlockType		      SubSystem
+      Name		      "MATLAB Function1"
+      SID		      "13"
+      Ports		      [1, 2]
+      Position		      [190, 296, 310, 374]
+      LibraryVersion	      "1.32"
+      ErrorFcn		      "Stateflow.Translate.translate"
+      PermitHierarchicalResolution "ExplicitOnly"
+      TreatAsAtomicUnit	      on
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      MaskType		      "Stateflow"
+      MaskDescription	      "Embedded MATLAB block"
+      MaskSelfModifiable      on
+      MaskDisplay	      "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('pr"
+      "ivate/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'q2accmag']);"
+      MaskIconFrame	      on
+      MaskIconOpaque	      off
+      MaskIconRotate	      "none"
+      MaskPortRotate	      "default"
+      MaskIconUnits	      "normalized"
+      Port {
+	PortNumber		1
+	Name			"Acc in body frame"
+	PropagatedSignals	"a"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		2
+	Name			"Mag in body frame"
+	PropagatedSignals	"m"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      System {
+	Name			"MATLAB Function1"
+	Location		[257, 457, 812, 717]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	SIDHighWatermark	"21"
+	Block {
+	  BlockType		  Inport
+	  Name			  "q"
+	  SID			  "13::20"
+	  Position		  [20, 101, 40, 119]
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  " Demux "
+	  SID			  "13::15"
+	  Ports			  [1, 1]
+	  Position		  [270, 205, 320, 245]
+	  Outputs		  "1"
+	}
+	Block {
+	  BlockType		  S-Function
+	  Name			  " SFunction "
+	  SID			  "13::14"
+	  Tag			  "Stateflow S-Function ahrs_filter 1"
+	  Ports			  [1, 3]
+	  Position		  [180, 104, 230, 206]
+	  FunctionName		  "sf_sfun"
+	  PortCounts		  "[1 3]"
+	  EnableBusSupport	  on
+	  Port {
+	    PortNumber		    2
+	    Name		    "a"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    3
+	    Name		    "m"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Terminator
+	  Name			  " Terminator "
+	  SID			  "13::17"
+	  Position		  [460, 216, 480, 234]
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "a"
+	  SID			  "13::5"
+	  Position		  [460, 101, 480, 119]
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "m"
+	  SID			  "13::21"
+	  Position		  [460, 136, 480, 154]
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  SrcBlock		  "q"
+	  SrcPort		  1
+	  DstBlock		  " SFunction "
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "a"
+	  Labels		  [0, 0; 0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  2
+	  DstBlock		  "a"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "m"
+	  Labels		  [0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  3
+	  DstBlock		  "m"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  " Demux "
+	  SrcPort		  1
+	  DstBlock		  " Terminator "
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  " SFunction "
+	  SrcPort		  1
+	  DstBlock		  " Demux "
+	  DstPort		  1
+	}
+      }
     }
     Block {
-      BlockType		      DiscretePulseGenerator
-      Name		      "Pulse\nGenerator1"
-      SID		      "11"
-      Ports		      [0, 1]
-      Position		      [25, 109, 55, 141]
-      PulseType		      "Time based"
-      Amplitude		      "0.03"
-      Period		      "30"
-      PulseWidth	      "33"
+      BlockType		      SubSystem
+      Name		      "MATLAB Function2"
+      SID		      "14"
+      Ports		      [1, 3]
+      Position		      [680, 161, 800, 239]
+      LibraryVersion	      "1.32"
+      ErrorFcn		      "Stateflow.Translate.translate"
+      PermitHierarchicalResolution "ExplicitOnly"
+      TreatAsAtomicUnit	      on
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      MaskType		      "Stateflow"
+      MaskDescription	      "Embedded MATLAB block"
+      MaskSelfModifiable      on
+      MaskDisplay	      "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('pr"
+      "ivate/eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'Kalman_itterate']);"
+      MaskIconFrame	      on
+      MaskIconOpaque	      off
+      MaskIconRotate	      "none"
+      MaskPortRotate	      "default"
+      MaskIconUnits	      "normalized"
+      System {
+	Name			"MATLAB Function2"
+	Location		[257, 457, 812, 717]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	SIDHighWatermark	"23"
+	Block {
+	  BlockType		  Inport
+	  Name			  "z"
+	  SID			  "14::22"
+	  Position		  [20, 101, 40, 119]
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  " Demux "
+	  SID			  "14::15"
+	  Ports			  [1, 1]
+	  Position		  [270, 210, 320, 250]
+	  Outputs		  "1"
+	}
+	Block {
+	  BlockType		  S-Function
+	  Name			  " SFunction "
+	  SID			  "14::14"
+	  Tag			  "Stateflow S-Function ahrs_filter 3"
+	  Ports			  [1, 4]
+	  Position		  [180, 106, 230, 209]
+	  FunctionName		  "sf_sfun"
+	  PortCounts		  "[1 4]"
+	  EnableBusSupport	  on
+	  Port {
+	    PortNumber		    2
+	    Name		    "q"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    3
+	    Name		    "w"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    4
+	    Name		    "wb"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Terminator
+	  Name			  " Terminator "
+	  SID			  "14::17"
+	  Position		  [460, 221, 480, 239]
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "q"
+	  SID			  "14::23"
+	  Position		  [460, 101, 480, 119]
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "w"
+	  SID			  "14::5"
+	  Position		  [460, 136, 480, 154]
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "wb"
+	  SID			  "14::21"
+	  Position		  [460, 171, 480, 189]
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  SrcBlock		  "z"
+	  SrcPort		  1
+	  DstBlock		  " SFunction "
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "q"
+	  Labels		  [0, 0; 0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  2
+	  DstBlock		  "q"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "w"
+	  Labels		  [0, 0; 0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  3
+	  DstBlock		  "w"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "wb"
+	  Labels		  [0, 0; 0, 0]
+	  SrcBlock		  " SFunction "
+	  SrcPort		  4
+	  DstBlock		  "wb"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  " Demux "
+	  SrcPort		  1
+	  DstBlock		  " Terminator "
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  " SFunction "
+	  SrcPort		  1
+	  DstBlock		  " Demux "
+	  DstPort		  1
+	}
+      }
     }
     Block {
-      BlockType		      DiscretePulseGenerator
-      Name		      "Pulse\nGenerator2"
-      SID		      "12"
-      Ports		      [0, 1]
-      Position		      [25, 174, 55, 206]
-      PulseType		      "Time based"
-      Amplitude		      "0.03"
-      Period		      "30"
-      PulseWidth	      "33"
-      PhaseDelay	      "10"
+      BlockType		      Mux
+      Name		      "Mux"
+      SID		      "15"
+      Ports		      [3, 1]
+      Position		      [255, 76, 260, 114]
+      ShowName		      off
+      Inputs		      "3"
+      DisplayOption	      "bar"
+      Port {
+	PortNumber		1
+	Name			"Rot vel in body frame"
+	PropagatedSignals	", , "
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+    }
+    Block {
+      BlockType		      Mux
+      Name		      "Mux1"
+      SID		      "16"
+      Ports		      [3, 1]
+      Position		      [560, 181, 565, 219]
+      ShowName		      off
+      Inputs		      "3"
+      DisplayOption	      "bar"
     }
     Block {
       BlockType		      Scope
@@ -1012,6 +1350,90 @@ Model {
       Ports		      [1]
       Position		      [440, 184, 470, 216]
       Floating		      off
+      Location		      [142, 176, 1508, 855]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Scope1"
+      SID		      "18"
+      Ports		      [1]
+      Position		      [900, 209, 930, 241]
+      Floating		      off
+      Location		      [368, 120, 1734, 799]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "12"
+      YMin		      "-0.03679166666666667"
+      YMax		      "-0.008791666666666666"
+      SaveName		      "ScopeData1"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Scope2"
+      SID		      "19"
+      Ports		      [1]
+      Position		      [900, 59, 930, 91]
+      Floating		      off
+      Location		      [461, 101, 1827, 780]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "30"
+      YMin		      "0"
+      YMax		      "0.03"
+      SaveName		      "ScopeData2"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Scope3"
+      SID		      "22"
+      Ports		      [1]
+      Position		      [900, 159, 930, 191]
+      Floating		      off
+      Location		      [100, 273, 1466, 952]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "30"
+      YMin		      "-0.1"
+      YMax		      "0.6000000000000001"
+      SaveName		      "ScopeData3"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Scope4"
+      SID		      "24"
+      Ports		      [1]
+      Position		      [900, 109, 930, 141]
+      Floating		      off
       Location		      [6, 48, 1372, 727]
       Open		      off
       NumInputPorts	      "1"
@@ -1019,10 +1441,65 @@ Model {
 	ListType		AxesTitles
 	axes1			"%<SignalLabel>"
       }
-      SaveToWorkspace	      on
+      SaveName		      "ScopeData4"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum"
+      SID		      "23"
+      Ports		      [2, 1]
+      Position		      [840, 190, 860, 210]
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "|++"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
+      BlockType		      ZeroOrderHold
+      Name		      "Zero-Order\nHold"
+      SID		      "17"
+      Position		      [600, 185, 635, 215]
+      SampleTime	      "1/200"
+    }
+    Block {
+      BlockType		      DiscretePulseGenerator
+      Name		      "omega_x"
+      SID		      "11"
+      Ports		      [0, 1]
+      Position		      [25, 109, 55, 141]
+      PulseType		      "Time based"
+      Amplitude		      "0.5"
+      Period		      "30"
+      PulseWidth	      "20"
+    }
+    Block {
+      BlockType		      DiscretePulseGenerator
+      Name		      "omega_y"
+      SID		      "12"
+      Ports		      [0, 1]
+      Position		      [25, 174, 55, 206]
+      PulseType		      "Time based"
+      Amplitude		      "0.5"
+      Period		      "30"
+      PulseWidth	      "20"
+      PhaseDelay	      "10"
+    }
+    Block {
+      BlockType		      DiscretePulseGenerator
+      Name		      "omega_z"
+      SID		      "10"
+      Ports		      [0, 1]
+      Position		      [25, 239, 55, 271]
+      PulseType		      "Time based"
+      Amplitude		      "0.5"
+      Period		      "30"
+      PulseWidth	      "20"
+      PhaseDelay	      "20"
     }
     Line {
       SrcBlock		      "MATLAB Function"
@@ -1031,42 +1508,157 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Pulse\nGenerator1"
-      SrcPort		      1
-      Points		      [100, 0; 0, 45]
-      DstBlock		      "MATLAB Function"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Pulse\nGenerator2"
-      SrcPort		      1
-      DstBlock		      "MATLAB Function"
-      DstPort		      2
-    }
-    Line {
-      SrcBlock		      "Integrator"
+      SrcBlock		      "omega_x"
       SrcPort		      1
       Points		      [15, 0]
       Branch {
-	Labels			[1, 0]
-	Points			[0, 70; -220, 0; 0, -40]
+	Points			[85, 0; 0, 45]
 	DstBlock		"MATLAB Function"
-	DstPort			4
+	DstPort			1
       }
       Branch {
-	DstBlock		"Scope"
+	Points			[0, -40]
+	DstBlock		"Mux"
 	DstPort			1
       }
     }
     Line {
-      SrcBlock		      "Pulse\nGenerator"
+      SrcBlock		      "omega_y"
+      SrcPort		      1
+      Points		      [35, 0]
+      Branch {
+	DstBlock		"MATLAB Function"
+	DstPort			2
+      }
+      Branch {
+	Points			[0, -95]
+	DstBlock		"Mux"
+	DstPort			2
+      }
+    }
+    Line {
+      Name		      "Quaternion"
+      SrcBlock		      "Integrator"
+      SrcPort		      1
+      Points		      [15, 0]
+      Branch {
+	DstBlock		"Scope"
+	DstPort			1
+      }
+      Branch {
+	Labels			[2, 0]
+	Points			[0, 70; -220, 0]
+	Branch {
+	  Points		  [0, -40]
+	  DstBlock		  "MATLAB Function"
+	  DstPort		  4
+	}
+	Branch {
+	  Points		  [0, 65]
+	  DstBlock		  "MATLAB Function1"
+	  DstPort		  1
+	}
+      }
+    }
+    Line {
+      SrcBlock		      "omega_z"
       SrcPort		      1
       Points		      [55, 0; 0, -45]
-      DstBlock		      "MATLAB Function"
+      Branch {
+	DstBlock		"MATLAB Function"
+	DstPort			3
+      }
+      Branch {
+	Points			[0, -105]
+	DstBlock		"Mux"
+	DstPort			3
+      }
+    }
+    Line {
+      Name		      "Rot vel in body frame"
+      Labels		      [0, 0]
+      SrcBlock		      "Mux"
+      SrcPort		      1
+      Points		      [230, 0]
+      Branch {
+	Points			[0, 105]
+	DstBlock		"Mux1"
+	DstPort			2
+      }
+      Branch {
+	Points			[390, 0]
+	DstBlock		"Scope2"
+	DstPort			1
+      }
+    }
+    Line {
+      Name		      "Acc in body frame"
+      Labels		      [0, 0]
+      SrcBlock		      "MATLAB Function1"
+      SrcPort		      1
+      Points		      [190, 0; 0, -125]
+      DstBlock		      "Mux1"
+      DstPort		      1
+    }
+    Line {
+      Name		      "Mag in body frame"
+      Labels		      [0, 0]
+      SrcBlock		      "MATLAB Function1"
+      SrcPort		      2
+      Points		      [200, 0; 0, -145]
+      DstBlock		      "Mux1"
       DstPort		      3
+    }
+    Line {
+      SrcBlock		      "Mux1"
+      SrcPort		      1
+      DstBlock		      "Zero-Order\nHold"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Zero-Order\nHold"
+      SrcPort		      1
+      DstBlock		      "MATLAB Function2"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "MATLAB Function2"
+      SrcPort		      3
+      Points		      [45, 0]
+      Branch {
+	DstBlock		"Scope1"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"Sum"
+	DstPort			2
+      }
+    }
+    Line {
+      SrcBlock		      "MATLAB Function2"
+      SrcPort		      2
+      DstBlock		      "Sum"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Sum"
+      SrcPort		      1
+      Points		      [10, 0; 0, -25]
+      DstBlock		      "Scope3"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "MATLAB Function2"
+      SrcPort		      1
+      Points		      [25, 0; 0, -50]
+      DstBlock		      "Scope4"
+      DstPort		      1
     }
     Annotation {
       Position		      [463, 197]
+    }
+    Annotation {
+      Position		      [916, 228]
     }
   }
 }
@@ -1083,29 +1675,31 @@ Stateflow {
     name		    "ahrs_filter"
     created		    "23-Jul-2012 20:45:42"
     isLibrary		    0
-    firstTarget		    12
+    firstTarget		    29
     sfVersion		    75014001
   }
   chart {
     id			    2
-    name		    "MATLAB Function"
-    windowPosition	    [300.747 330 200.25 189.75]
+    name		    "MATLAB Function1"
+    windowPosition	    [315.747 315 200.25 189.75]
     viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 1366 768 1.333333333333333]
+    screen		    [1 1 1920 1080 1.333333333333333]
     treeNode		    [0 3 0 0]
     firstTransition	    5
     firstJunction	    4
     viewObj		    2
     machine		    1
     toolbarMode		    LIBRARY_TOOLBAR
-    ssIdHighWaterMark	    8
+    subviewS {
+    }
+    ssIdHighWaterMark	    9
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     firstData		    6
-    chartFileNumber	    2
+    chartFileNumber	    1
     disableImplicitCasting  1
     eml {
-      name		      "Quaternion_der"
+      name		      "q2accmag"
     }
   }
   state {
@@ -1122,11 +1716,11 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function dQ = Quaternion_der(wx,wy,wz,q)\n  w = -[wx;\n       wy;\n       wz];\n   \n  dQ2 = [-q("
-      "2), -q(3), -q(4);\n        q(1), -q(4), q(3);\n        q(4), q(1), -q(2);\n        -q(3), q(2), q(1)]*w;\n    \n"
-      "  dQ = [-q(2), -q(3), -q(4);\n        q(1), q(4), -q(3);\n        -q(4), q(1), q(2);\n        q(3), -q(2), q(1)]"
-      "*w;\n    \nend"
-      editorLayout	      "100 M4x1[205 227 1080 733]"
+      script		      "function [a,m] = q2accmag(q)\n  R = [q(1)^2+q(2)^2-q(3)^2-q(4)^2, 2*(q(2)*q(3)-q(1)*q(4)), 2*(q(2"
+      ")*q(4)+q(1)*q(3));\n       2*(q(2)*q(3)+q(1)*q(4)), q(1)^2-q(2)^2+q(3)^2-q(4)^2, 2*(q(3)*q(4)-q(1)*q(2));\n     "
+      "  2*(q(2)*q(4)-q(1)*q(3)), 2*(q(3)*q(4)+q(1)*q(2)), q(1)^2-q(2)^2-q(3)^2+q(4)^2];\n   \n  earth_mag = [10,0,50]'"
+      ";\n  earth_mag = earth_mag/norm(earth_mag);\n  \n  m = R'*earth_mag;\n  a = R'*[0; 0; -1];  \nend"
+      editorLayout	      "100 M4x1[110 204 1080 733]"
     }
   }
   junction {
@@ -1161,28 +1755,9 @@ Stateflow {
   }
   data {
     id			    6
-    ssIdNumber		    4
-    name		    "wx"
-    linkNode		    [2 0 7]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    7
     ssIdNumber		    5
-    name		    "dQ"
-    linkNode		    [2 6 8]
+    name		    "a"
+    linkNode		    [2 0 7]
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -1199,54 +1774,216 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   data {
-    id			    8
-    ssIdNumber		    6
-    name		    "wy"
-    linkNode		    [2 7 9]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    9
-    ssIdNumber		    7
-    name		    "wz"
-    linkNode		    [2 8 10]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    10
+    id			    7
     ssIdNumber		    8
     name		    "q"
-    linkNode		    [2 9 0]
+    linkNode		    [2 6 8]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    8
+    ssIdNumber		    9
+    name		    "m"
+    linkNode		    [2 7 0]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  instance {
+    id			    9
+    name		    "MATLAB Function1"
+    machine		    1
+    chart		    2
+  }
+  chart {
+    id			    10
+    name		    "MATLAB Function"
+    windowPosition	    [300.747 330 200.25 189.75]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 1366 768 1.333333333333333]
+    treeNode		    [0 11 0 0]
+    firstTransition	    13
+    firstJunction	    12
+    viewObj		    10
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    ssIdHighWaterMark	    8
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    14
+    chartFileNumber	    2
+    disableImplicitCasting  1
+    eml {
+      name		      "Quaternion_der"
+    }
+  }
+  state {
+    id			    11
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    10
+    treeNode		    [10 0 0 0]
+    superState		    SUBCHART
+    subviewer		    10
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function dQ = Quaternion_der(wx,wy,wz,q)\n  w = -[wx;\n       wy;\n       wz];\n   \n  dQ2 = [-q("
+      "2), -q(3), -q(4);\n        q(1), -q(4), q(3);\n        q(4), q(1), -q(2);\n        -q(3), q(2), q(1)]*w;\n    \n"
+      "  dQ = [-q(2), -q(3), -q(4);\n        q(1), q(4), -q(3);\n        -q(4), q(1), q(2);\n        q(3), -q(2), q(1)]"
+      "*w;\n    \nend"
+      editorLayout	      "100 M4x1[451 347 1080 733]"
+    }
+  }
+  junction {
+    id			    12
+    position		    [23.5747 49.5747 7]
+    chart		    10
+    linkNode		    [10 0 0]
+    subviewer		    10
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    13
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      12
+      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    10
+    linkNode		    [10 0 0]
+    dataLimits		    [23.575 23.575 14.625 34.575]
+    subviewer		    10
+    drawStyle		    SMART
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  data {
+    id			    14
+    ssIdNumber		    4
+    name		    "wx"
+    linkNode		    [10 0 15]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    15
+    ssIdNumber		    5
+    name		    "dQ"
+    linkNode		    [10 14 16]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    16
+    ssIdNumber		    6
+    name		    "wy"
+    linkNode		    [10 15 17]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    17
+    ssIdNumber		    7
+    name		    "wz"
+    linkNode		    [10 16 18]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    18
+    ssIdNumber		    8
+    name		    "q"
+    linkNode		    [10 17 0]
     scope		    INPUT_DATA
     machine		    1
     props {
@@ -1265,13 +2002,235 @@ Stateflow {
     dataType		    "Inherit: Same as Simulink"
   }
   instance {
-    id			    11
+    id			    19
     name		    "MATLAB Function"
     machine		    1
-    chart		    2
+    chart		    10
+  }
+  chart {
+    id			    20
+    name		    "MATLAB Function2"
+    windowPosition	    [330.747 300 200.25 189.75]
+    viewLimits		    [0 156.75 0 153.75]
+    screen		    [1 1 1920 1080 1.333333333333333]
+    treeNode		    [0 21 0 0]
+    firstTransition	    23
+    firstJunction	    22
+    viewObj		    20
+    machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
+    subviewS {
+    }
+    ssIdHighWaterMark	    10
+    decomposition	    CLUSTER_CHART
+    type		    EML_CHART
+    firstData		    24
+    chartFileNumber	    3
+    disableImplicitCasting  1
+    eml {
+      name		      "Kalman_itterate"
+    }
+  }
+  state {
+    id			    21
+    labelString		    "eML_blk_kernel()"
+    position		    [18 64.5 118 66]
+    fontSize		    12
+    chart		    20
+    treeNode		    [20 0 0 0]
+    superState		    SUBCHART
+    subviewer		    20
+    ssIdNumber		    1
+    type		    FUNC_STATE
+    decomposition	    CLUSTER_STATE
+    eml {
+      isEML		      1
+      script		      "function [q,w,wb] = Kalman_itterate(z)\n  % Paramaters:\n  % P = State covariance matrix\n  % x ="
+      " State variables\n  % z = Measurement\n  % u = Input\n  % n = Number of itterations\n  \n  persistent x_est P n;"
+      "\n  \n  dt = 1/200;\n  \n  % Tuning paramaters\n  Q = [5, 0, 0, 0, 0, 0, 0, 0, 0, 0;\n       0, 5, 0, 0, 0, 0, 0"
+      ", 0, 0, 0;\n       0, 0, 5, 0, 0, 0, 0, 0, 0, 0;\n       0, 0, 0, 5, 0, 0, 0, 0, 0, 0;\n       0, 0, 0, 0, 100, "
+      "0, 0, 0, 0, 0;\n       0, 0, 0, 0, 0, 100, 0, 0, 0, 0;\n       0, 0, 0, 0, 0, 0, 100, 0, 0, 0;\n       0, 0, 0, "
+      "0, 0, 0, 0, 0.1, 0, 0;\n       0, 0, 0, 0, 0, 0, 0, 0, 0.1, 0;\n       0, 0, 0, 0, 0, 0, 0, 0, 0, 0.1];\n  \n  R"
+      " = [1000, 0, 0, 0, 0, 0, 0, 0, 0;\n       0, 1000, 0, 0, 0, 0, 0, 0, 0;\n       0, 0, 1000, 0, 0, 0, 0, 0, 0;\n "
+      "      0, 0, 0, 1000, 0, 0, 0, 0, 0;\n       0, 0, 0, 0, 1000, 0, 0, 0, 0;\n       0, 0, 0, 0, 0, 1000, 0, 0, 0;\n"
+      "       0, 0, 0, 0, 0, 0, 1000, 0, 0;\n       0, 0, 0, 0, 0, 0, 0, 1000, 0;\n       0, 0, 0, 0, 0, 0, 0, 0, 1000]"
+      "; \n   \n  % Startup conditions\n  % P will converge after a few itterations\n  if isempty(P)\n    P = eye(lengt"
+      "h(Q))*10;\n     \n    x_est = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]';\n    \n    n = 1;\n  else\n    n = n+1;    % Good"
+      " for measuring state covariance convergance\n  end\n  \n  % State vector:\n  %   x = [q0;\n  %        q1;\n  %  "
+      "      q2;\n  %        q3;\n  %        wx;\n  %        wy;\n  %        wz;\n  %        wxb;\n  %        wyb;\n  %"
+      "        wzb];\n  \n  \n  q0 = x_est(1);\n  q1 = x_est(2);\n  q2 = x_est(3);\n  q3 = x_est(4);\n  wx = x_est(5);\n"
+      "  wy = x_est(6);\n  wz = x_est(7);\n  wxb = x_est(8);\n  wyb = x_est(9);\n  wzb = x_est(10);\n  \n  % Constants "
+      "and model specific parameters\n  A = [         1, -(dt*wx)/2, -(dt*wy)/2, -(dt*wz)/2, -(dt*q1)/2, -(dt*q2)/2, -("
+      "dt*q3)/2, 0, 0, 0;\n        (dt*wx)/2,          1, -(dt*wz)/2,  (dt*wy)/2,  (dt*q0)/2,  (dt*q3)/2, -(dt*q2)/2, 0"
+      ", 0, 0;\n        (dt*wy)/2,  (dt*wz)/2,          1, -(dt*wx)/2, -(dt*q3)/2,  (dt*q0)/2,  (dt*q1)/2, 0, 0, 0;\n  "
+      "      (dt*wz)/2, -(dt*wy)/2,  (dt*wx)/2,          1,  (dt*q2)/2, -(dt*q1)/2,  (dt*q0)/2, 0, 0, 0;\n             "
+      "   0,          0,          0,          0,          1,          0,          0, 0, 0, 0;\n                0,      "
+      "    0,          0,          0,          0,          1,          0, 0, 0, 0;\n                0,          0,     "
+      "     0,          0,          0,          0,          1, 0, 0, 0;\n                0,          0,          0,    "
+      "      0,          0,          0,          0, 1, 0, 0;\n                0,          0,          0,          0,   "
+      "       0,          0,          0, 0, 1, 0;\n                0,          0,          0,          0,          0,  "
+      "        0,          0, 0, 0, 1];\n   \n  % ----------------------------\n  %  Kalman Filter starts here!\n  % --"
+      "--------------------------\n  \n  % Model prediction\n  x_est = [q0 - (dt*q1*wx)/2 - (dt*q2*wy)/2 - (dt*q3*wz)/2"
+      ";\n           q1 + (dt*q0*wx)/2 - (dt*q2*wz)/2 + (dt*q3*wy)/2;\n           q2 + (dt*q0*wy)/2 + (dt*q1*wz)/2 - (d"
+      "t*q3*wx)/2;\n           q3 + (dt*q0*wz)/2 - (dt*q1*wy)/2 + (dt*q2*wx)/2;\n                                      "
+      "                  wx;\n                                                        wy;\n                            "
+      "                            wz;\n                                                        wxb;\n                 "
+      "                                       wyb;\n                                                        wzb];\n\n  "
+      "% Re-normalize Quaternion\n  qnorm = sqrt(x_est(1)^2 + x_est(2)^2 + x_est(3)^2 + x_est(4)^2);\n  x_est(1) = x_es"
+      "t(1)/qnorm;\n  x_est(2) = x_est(2)/qnorm;\n  x_est(3) = x_est(3)/qnorm;\n  x_est(4) = x_est(4)/qnorm;\n  \n  \n "
+      " % State covariance matrix update based on model\n  P = A*P*A' + Q;\n  \n  % Model and measurement differences\n"
+      "  q0 = x_est(1);\n  q1 = x_est(2);\n  q2 = x_est(3);\n  q3 = x_est(4);\n  \n  mR = [q0^2+q1^2-q2^2-q3^2, 2*(q1*q"
+      "2-q0*q3), 2*(q1*q3+q0*q2);\n       2*(q1*q2+q0*q3), q0^2-q1^2+q2^2-q3^2, 2*(q2*q3-q0*q1);\n       2*(q1*q3-q0*q2"
+      "), 2*(q2*q3+q0*q1), q0^2-q1^2-q2^2+q3^2] * [z(7); z(8); z(9)];\n   \n  bx = sqrt(mR(1)^2 + mR(2)^2);\n  bz = mR("
+      "3);\n  \n  h = [                                      2*q0*q2 - 2*q1*q3;\n                                      "
+      "     - 2*q0*q1 - 2*q2*q3;\n                                   - q0^2 + q1^2 + q2^2 - q3^2;\n                    "
+      "                                  wx + wxb;\n                                                      wy + wyb;\n  "
+      "                                                    wz + wzb;\n       bx*(q0^2 + q1^2 - q2^2 - q3^2) - bz*(2*q0*"
+      "q2 - 2*q1*q3);\n               bz*(2*q0*q1 + 2*q2*q3) - bx*(2*q0*q3 - 2*q1*q2);\n       bz*(q0^2 - q1^2 - q2^2 +"
+      " q3^2) + bx*(2*q0*q2 + 2*q1*q3)];\n   \n  y = z - h; % + v_k\n  \n  % The H matrix maps the measurement to the s"
+      "tates\n  H = [             2*q2,             -2*q3,                2*q0,             -2*q1, 0, 0, 0, 0, 0, 0;\n "
+      "                  -2*q1,             -2*q0,               -2*q3,             -2*q2, 0, 0, 0, 0, 0, 0;\n         "
+      "          -2*q0,              2*q1,                2*q2,             -2*q3, 0, 0, 0, 0, 0, 0;\n                 "
+      "      0,                 0,                   0,                 0, 1, 0, 0, 1, 0, 0;\n                       0,"
+      "                 0,                   0,                 0, 0, 1, 0, 0, 1, 0;\n                       0,        "
+      "         0,                   0,                 0, 0, 0, 1, 0, 0, 1;\n       2*bx*q0 - 2*bz*q2, 2*bx*q1 + 2*bz*"
+      "q3, - 2*bx*q2 - 2*bz*q0, 2*bz*q1 - 2*bx*q3, 0, 0, 0, 0, 0, 0;\n       2*bz*q1 - 2*bx*q3, 2*bx*q2 + 2*bz*q0,   2*"
+      "bx*q1 + 2*bz*q3, 2*bz*q2 - 2*bx*q0, 0, 0, 0, 0, 0, 0;\n       2*bx*q2 + 2*bz*q0, 2*bx*q3 - 2*bz*q1,   2*bx*q0 - "
+      "2*bz*q2, 2*bx*q1 + 2*bz*q3, 0, 0, 0, 0, 0, 0]; \n    \n  % Measurement covariance update\n  S = H*P*H' + R;\n  \n"
+      "  % Calculate Kalman gain\n  K = P*H'/S;\n  \n  % Corrected model prediction\n  x_est = x_est + K*y;      % Outp"
+      "ut state vector\n  \n  % Re-normalize Quaternion\n  qnorm = sqrt(x_est(1)^2 + x_est(2)^2 + x_est(3)^2 + x_est(4)"
+      "^2);\n  x_est(1) = x_est(1)/qnorm;\n  x_est(2) = x_est(2)/qnorm;\n  x_est(3) = x_est(3)/qnorm;\n  x_est(4) = x_e"
+      "st(4)/qnorm;\n  \n  % Update state covariance with new knowledge\n  I = eye(length(P));\n  P = (I - K*H)*P;  % O"
+      "utput state covariance\n  \n  q = [x_est(1);\n       x_est(2);\n       x_est(3);\n       x_est(4)];\n   \n  w = "
+      "[x_est(5);\n       x_est(6);\n       x_est(7)];\n   \n  wb = [x_est(8);\n        x_est(9);\n        x_est(10)];\n"
+      "  \n  % ----------------------------\n  %  Kalman Filter ends here!\n  % ----------------------------\n  \nend"
+      editorLayout	      "100 M4x1[110 204 1080 733]"
+    }
+  }
+  junction {
+    id			    22
+    position		    [23.5747 49.5747 7]
+    chart		    20
+    linkNode		    [20 0 0]
+    subviewer		    20
+    ssIdNumber		    3
+    type		    CONNECTIVE_JUNCTION
+  }
+  transition {
+    id			    23
+    labelString		    "{eML_blk_kernel();}"
+    labelPosition	    [32.125 19.875 102.544 14.964]
+    fontSize		    12
+    src {
+      intersection	      [0 0 1 0 23.5747 14.625 0 0]
+    }
+    dst {
+      id		      22
+      intersection	      [7 0 -1 -1 23.5747 42.5747 0 0]
+    }
+    midPoint		    [23.5747 24.9468]
+    chart		    20
+    linkNode		    [20 0 0]
+    dataLimits		    [23.575 23.575 14.625 34.575]
+    subviewer		    20
+    drawStyle		    SMART
+    executionOrder	    1
+    ssIdNumber		    2
+  }
+  data {
+    id			    24
+    ssIdNumber		    8
+    name		    "q"
+    linkNode		    [20 0 25]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    25
+    ssIdNumber		    5
+    name		    "w"
+    linkNode		    [20 24 26]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    26
+    ssIdNumber		    9
+    name		    "wb"
+    linkNode		    [20 25 27]
+    scope		    OUTPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_NO
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  data {
+    id			    27
+    ssIdNumber		    10
+    name		    "z"
+    linkNode		    [20 26 0]
+    scope		    INPUT_DATA
+    machine		    1
+    props {
+      array {
+	size			"-1"
+      }
+      type {
+	method			SF_INHERITED_TYPE
+	primitive		SF_DOUBLE_TYPE
+	isSigned		1
+	wordLength		"16"
+      }
+      complexity	      SF_COMPLEX_INHERITED
+      frame		      SF_FRAME_INHERITED
+    }
+    dataType		    "Inherit: Same as Simulink"
+  }
+  instance {
+    id			    28
+    name		    "MATLAB Function2"
+    machine		    1
+    chart		    20
   }
   target {
-    id			    12
+    id			    29
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1

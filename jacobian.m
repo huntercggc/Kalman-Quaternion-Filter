@@ -31,12 +31,9 @@ w = [wx;
 Q = q+dt/2*[-q1, -q2, -q3;
 q0, q3, -q2;
 -q3, q0, q1;
-q2, -q1, q0]*w
+q2, -q1, q0]*w;
  
-f = [q0 - (dt*q1*wx)/2 - (dt*q2*wy)/2 - (dt*q3*wz)/2;
-     q1 + (dt*q0*wx)/2 - (dt*q2*wz)/2 + (dt*q3*wy)/2;
-     q2 + (dt*q0*wy)/2 + (dt*q1*wz)/2 - (dt*q3*wx)/2;
-     q3 + (dt*q0*wz)/2 - (dt*q1*wy)/2 + (dt*q2*wx)/2;
+f = [Q;
      wx;
      wy;
      wz;
