@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.161"
+    ComputedModelVersion    "1.171"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -37,9 +37,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Korken"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jul 26 20:11:14 2012"
-  RTWModifiedTimeStamp	  265231775
-  ModelVersionFormat	  "1.%<AutoIncrement:161>"
+  LastModifiedDate	  "Mon Aug 13 09:19:13 2012"
+  RTWModifiedTimeStamp	  266750265
+  ModelVersionFormat	  "1.%<AutoIncrement:171>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -835,7 +835,7 @@ Model {
   }
   System {
     Name		    "ahrs_filter"
-    Location		    [2, 74, 1364, 707]
+    Location		    [142, 151, 1488, 784]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    212
@@ -849,7 +849,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "44"
+    SIDHighWatermark	    "46"
     Block {
       BlockType		      ZeroOrderHold
       Name		      "200Hz Sampling"
@@ -889,12 +889,35 @@ Model {
     }
     Block {
       BlockType		      Scope
-      Name		      "Bias Scope"
+      Name		      "Bias Error"
+      SID		      "45"
+      Ports		      [1]
+      Position		      [960, 399, 990, 431]
+      Floating		      off
+      Location		      [5, 48, 1371, 727]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      YMin		      "-0.00015"
+      YMax		      "0.00015"
+      SaveToWorkspace	      on
+      SaveName		      "BiasError"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Estimated Bias"
       SID		      "18"
       Ports		      [1]
       Position		      [960, 179, 990, 211]
       Floating		      off
-      Location		      [1, 48, 1367, 727]
+      Location		      [5, 48, 1371, 727]
       Open		      off
       NumInputPorts	      "1"
       List {
@@ -904,7 +927,55 @@ Model {
       TimeRange		      "10"
       YMin		      "0.04"
       YMax		      "0.11"
-      SaveName		      "ScopeData1"
+      SaveToWorkspace	      on
+      SaveName		      "BiasEst"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Estimated Omega"
+      SID		      "22"
+      Ports		      [1]
+      Position		      [960, 124, 990, 156]
+      Floating		      off
+      Location		      [692, 56, 1359, 719]
+      Open		      off
+      NumInputPorts	      "1"
+      ZoomMode		      "xonly"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      YMin		      "-0.1"
+      YMax		      "0.6000000000000001"
+      SaveToWorkspace	      on
+      SaveName		      "OmegaEst"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Estimated Quaternion"
+      SID		      "24"
+      Ports		      [1]
+      Position		      [960, 69, 990, 101]
+      Floating		      off
+      Location		      [9, 56, 676, 719]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      TimeRange		      "10"
+      YMin		      "-0.6000000000000001"
+      YMax		      "1"
+      SaveToWorkspace	      on
+      SaveName		      "QuatEst"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
@@ -1182,7 +1253,8 @@ Model {
       TimeRange		      "10"
       YMin		      "-0.04"
       YMax		      "0.05"
-      SaveName		      "ScopeData6"
+      SaveToWorkspace	      on
+      SaveName		      "OmegaError"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
@@ -1204,30 +1276,8 @@ Model {
       TimeRange		      "10"
       YMin		      "-0.1"
       YMax		      "0.6000000000000001"
-      SaveName		      "ScopeData2"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "Omega Scope"
-      SID		      "22"
-      Ports		      [1]
-      Position		      [960, 124, 990, 156]
-      Floating		      off
-      Location		      [692, 56, 1359, 719]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      YMin		      "-0.1"
-      YMax		      "0.6000000000000001"
-      SaveName		      "ScopeData3"
+      SaveToWorkspace	      on
+      SaveName		      "OmegaRef"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
@@ -1407,7 +1457,8 @@ Model {
       TimeRange		      "10"
       YMin		      "-0.0025"
       YMax		      "0.0015"
-      SaveName		      "ScopeData5"
+      SaveToWorkspace	      on
+      SaveName		      "QuatError"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
@@ -1429,28 +1480,8 @@ Model {
       TimeRange		      "10"
       YMin		      "-0.6000000000000001"
       YMax		      "1"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "Quaternion Scope"
-      SID		      "24"
-      Ports		      [1]
-      Position		      [960, 69, 990, 101]
-      Floating		      off
-      Location		      [9, 56, 676, 719]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      TimeRange		      "10"
-      YMin		      "-0.6000000000000001"
-      YMax		      "1"
       SaveToWorkspace	      on
+      SaveName		      "QuatRef"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
@@ -1663,6 +1694,19 @@ Model {
       SaturateOnIntegerOverflow	off
     }
     Block {
+      BlockType		      Sum
+      Name		      "Sum5"
+      SID		      "46"
+      Ports		      [2, 1]
+      Position		      [760, 405, 780, 425]
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "-+|"
+      InputSameDT	      off
+      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+      SaturateOnIntegerOverflow	off
+    }
+    Block {
       BlockType		      TransportDelay
       Name		      "Transport\nDelay"
       SID		      "42"
@@ -1677,6 +1721,7 @@ Model {
       Ports		      [1, 1]
       Position		      [105, 180, 135, 210]
       DelayTime		      "6"
+      BufferSize	      "2048"
     }
     Block {
       BlockType		      FromWorkspace
@@ -1815,16 +1860,23 @@ Model {
     Line {
       SrcBlock		      "Extended Kalman Filter"
       SrcPort		      3
-      Points		      [30, 0; 0, 30]
-      DstBlock		      "Bias Scope"
-      DstPort		      1
+      Points		      [30, 0; 0, 30; 15, 0]
+      Branch {
+	DstBlock		"Estimated Bias"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, 195]
+	DstBlock		"Sum5"
+	DstPort			1
+      }
     }
     Line {
       SrcBlock		      "Extended Kalman Filter"
       SrcPort		      2
       Points		      [15, 0]
       Branch {
-	DstBlock		"Omega Scope"
+	DstBlock		"Estimated Omega"
 	DstPort			1
       }
       Branch {
@@ -1839,7 +1891,7 @@ Model {
       Points		      [5, 0]
       Branch {
 	Points			[20, 0; 0, -30]
-	DstBlock		"Quaternion Scope"
+	DstBlock		"Estimated Quaternion"
 	DstPort			1
       }
       Branch {
@@ -1858,8 +1910,16 @@ Model {
     Line {
       SrcBlock		      "Gyro Bias"
       SrcPort		      1
-      DstBlock		      "Sum1"
-      DstPort		      3
+      Points		      [-10, 0]
+      Branch {
+	DstBlock		"Sum1"
+	DstPort			3
+      }
+      Branch {
+	Points			[0, 330]
+	DstBlock		"Sum5"
+	DstPort			2
+      }
     }
     Line {
       SrcBlock		      "Gyro noise"
@@ -1901,18 +1961,6 @@ Model {
       DstPort		      2
     }
     Line {
-      SrcBlock		      "Sum3"
-      SrcPort		      1
-      DstBlock		      "Quaternion Error"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Sum4"
-      SrcPort		      1
-      DstBlock		      "Omega Error"
-      DstPort		      1
-    }
-    Line {
       SrcBlock		      "Transport\nDelay"
       SrcPort		      1
       Points		      [15, 0]
@@ -1946,6 +1994,24 @@ Model {
       Points		      [10, 0; 0, -145]
       DstBlock		      "Mux1"
       DstPort		      3
+    }
+    Line {
+      SrcBlock		      "Sum3"
+      SrcPort		      1
+      DstBlock		      "Quaternion Error"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Sum4"
+      SrcPort		      1
+      DstBlock		      "Omega Error"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Sum5"
+      SrcPort		      1
+      DstBlock		      "Bias Error"
+      DstPort		      1
     }
     Annotation {
       Position		      [523, 137]
@@ -2397,7 +2463,7 @@ Stateflow {
       "];\n   \n  w = [x_est(5);\n       x_est(6);\n       x_est(7)];\n   \n  wb = [x_est(8);\n        x_est(9);\n     "
       "   x_est(10)];\n  \n  % ----------------------------\n  %  Kalman Filter ends here!\n  % -----------------------"
       "-----\n  \nend"
-      editorLayout	      "100 M4x1[392 175 1080 733]"
+      editorLayout	      "100 M4x1[228 174 1080 731]"
     }
   }
   junction {
